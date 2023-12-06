@@ -12,6 +12,9 @@
     "password": "password",
     "database": "user_todos"
   },
+  "db_render_uri": {
+    "connectionString": "postgres://makroot:VFPJBPKaLTdF1IDJRW3ciRh8Dq4hvEgG@dpg-clo95fuqc21c73e4tuk0-a/user_todos?sslmode=require"
+  },
   "db_onrender": {
     "host": "dpg-clo95fuqc21c73e4tuk0-a",
     "port": 5432,

@@ -12,7 +12,7 @@
     "password": "password",
     "database": "user_todos"
   },
-  "db_render_uri": "postgres://user_todos_jr43_user:AP4JuWavQ3MsBWPnwRYVVyl4kHQKsMZN@dpg-clofe2ggqk6s73e8b7r0-a/user_todos_jr43?sslmode=require",
+  "db_render_uri": "postgres://user_todos_jr43_user:AP4JuWavQ3MsBWPnwRYVVyl4kHQKsMZN@dpg-clofe2ggqk6s73e8b7r0-a/user_todos_jr43",
   "db_onrender": {
     "host": "dpg-clofe2ggqk6s73e8b7r0-a",
     "port": 5432,

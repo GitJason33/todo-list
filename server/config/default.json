@@ -1,0 +1,12 @@
+{
+  "API_KEY": "kazablanca",
+  "allowed_clients": "*",
+  "jwtSecret": "Secret_Shut_The_Fuck_Up, shhhh",
+  "db": {
+    "host": "localhost",
+    "port": 5432,
+    "user": "postgres",
+    "password": "password",
+    "database": "user_todos"
+  }
+}

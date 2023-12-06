@@ -1,0 +1,58 @@
+@import "./vars";
+
+
+.taskNo {
+  @apply 
+    text-second text-left 
+    min-w-[34px]
+    sc-mid:min-w-[42px]
+    sc-laptop:min-w-[50px];
+
+  
+  a {
+    @apply hover:text-prime transition-colors;
+  }
+}
+
+
+.taskTitle {
+  @apply 
+    overflow-hidden whitespace-nowrap overflow-ellipsis
+    max-w-[60px] w-full;
+}
+
+
+.taskCheckbox {
+  @include center-it;
+
+  @apply 
+    rounded-full
+    w-[15px] h-[15px]
+    sc-mid:w-[18px] sc-mid:h-[18px]
+    sc-laptop:w-[22px] sc-laptop:h-[22px]
+    bg-weak text-dark 
+    cursor-pointer;
+}
+
+
+.todoDueDate {
+  @apply cursor-pointer text-high;
+
+  // open the tooltip on hover
+  &:hover ~ menu {
+    @apply 
+      w-[140px] block
+      -right-1 
+      sc-sm:-right-[3px] sc-sm:w-[180px]
+      sc-mid:-right-0.5
+      sc-laptop:-right-[1px];
+  }
+}
+
+
+.todoIsDone {
+  
+  & > :not(:first-child, td[aria-label="due-date"]){
+    @apply line-through opacity-50;
+  }
+}

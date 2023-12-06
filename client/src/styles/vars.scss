@@ -1,0 +1,6 @@
+$maxEyeView: 650px;
+
+
+@mixin center-it {
+  @apply flex items-center justify-center;
+}

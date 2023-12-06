@@ -1,0 +1,17 @@
+1. Confirmation box: 
+  $$$ - global state 
+  $$$ - Confirmation box design 
+
+$$$ 2. dashboard page loads all user todos, and an add button 
+$$$ 3. user todo details (where it shows the description and options to edit and delete) 
+
+4. create the todo form to: 
+  $$$ - edit an existing todo
+  $$$ - add a new todo
+  $$$ - bug: when editing a todo, dashboard state isnt changed
+  $$$ - bug: when trying to edit a todo, due_time is deducted by time zone
+
+5. continue home page with:
+  $$$ -> Manage your todos section fixed fully (but first finish it) 
+  $$$ -> customize them as you like (build the component to showcase it)
+  $$$ -> still thinking section where you say sign up for free

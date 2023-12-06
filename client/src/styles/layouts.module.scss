@@ -1,0 +1,117 @@
+// navbar
+.navbar {
+  border-bottom: 2px solid;
+  @apply 
+    bg-dark/60 backdrop-blur-xl
+    sticky top-0 z-50
+    border-second
+    flex justify-between;
+}
+
+.navItem {
+  @apply 
+    inline-block px-3 py-1.5
+    hover:text-prime transition-colors
+    cursor-pointer;
+}
+
+.navMenuIcon {
+  @apply flex flex-col justify-center gap-1.5 select-none;
+
+  // icon bars 
+  span {
+    @apply 
+      inline-block h-[3px] w-6
+      bg-light rounded-lg
+      transition-all duration-300
+      select-none;
+  }
+
+  &:hover span {
+    @apply bg-prime;
+  }
+}
+
+
+// all about dropdown menu
+.dropdown {
+  border: 1px solid;
+  top: calc(100% + 12px);
+
+
+  @apply 
+    hidden bg-dark
+    divide-y divide-second border-second rounded-lg
+    absolute right-3 z-50;
+    
+  // dropdown item
+  & > :nth-child(1n+1) {
+    @apply
+      block text-left
+      transition-colors hover:text-prime
+      px-3 py-1.5 w-full 
+      cursor-pointer select-none;
+  }
+
+
+  // little arrow design
+  &::before {
+    content: "";
+    @apply absolute -top-3 right-1;
+
+    border: 6px solid;
+    border-color: 
+      transparent 
+      transparent 
+      theme("colors.second") 
+      transparent;
+  }
+}
+
+.dropdownToggler{
+  @apply hidden;
+
+
+  // when the checkbox is checked, dropdown appear
+  &:checked ~ .dropdown {
+    @apply block;
+  }
+
+  // an x-mark forms
+  &:checked ~ .navMenuIcon span:first-child{
+    @apply 
+    origin-right -rotate-[45deg]
+    -translate-y-1;
+  }
+  &:checked ~ .navMenuIcon span:last-child{
+    @apply 
+    origin-right rotate-[45deg]
+    translate-y-1;
+  }
+}
+// navbar end
+
+
+
+// footer
+.footer {
+  border-top: 2px solid;
+  @apply border-second;
+}
+
+.footTitle {
+  @apply text-second;
+}
+
+.footContainer{
+  @apply p-3 flex gap-6 flex-wrap justify-evenly;
+}
+
+.footItem {
+  @apply block hover:text-prime transition-colors;
+}
+
+.footSect {
+  @apply basis-[150px];
+}
+// footer end 

@@ -1,0 +1,33 @@
+@import "./vars";
+
+
+.homeEntry {
+  background-image: url(/img/todo-bg.jpg);
+  background-size: cover;
+  background-position: center center;
+  
+  @apply px-3 relative;
+
+  // title
+  h1 {
+    max-width: $maxEyeView;
+    @apply mx-auto relative z-[20] py-12 sc-tablet:py-24 sc-desktop:py-36;
+
+    font-size: clamp(24px, 10vw, 48px);
+  }
+
+
+  // color effects
+  span {
+    @apply text-prime;
+  }
+}
+
+
+.entryBgOverlay {
+  @apply 
+    absolute top-0 left-0
+    w-full h-full
+    bg-dark/60
+    z-10;
+}

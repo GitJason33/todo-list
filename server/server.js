@@ -3,7 +3,7 @@ const cors = require('cors');
 const config = require('config');
 
 const ErrorHandler = require("./controllers/middlewares/ErrorHandler.js");
-const APIKeyChecker = require("./controllers/middlewares/APIKeyChecker.js");
+const APIKeyChecker = require("./controllers/middlewares/ApiKeyChecker.js");
 
 const userRouter = require("./controllers/routes/user-route.js");
 const taskRouter = require("./controllers/routes/task-route.js");

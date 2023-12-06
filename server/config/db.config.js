@@ -2,7 +2,10 @@ const postgres = require('pg');
 const config = require('config');
 
 
-const pool = new postgres.Pool(config.get("db_render_uri"));
+const pool = new postgres.Pool({
+  connectionString: config.get("db_render_uri"),
+  ...config.get("db_onrender"),
+});
 
 module.exports = pool;
 

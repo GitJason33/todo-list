@@ -12,15 +12,13 @@
     "password": "password",
     "database": "user_todos"
   },
-  "db_render_uri": {
-    "connectionString": "postgres://makroot:VFPJBPKaLTdF1IDJRW3ciRh8Dq4hvEgG@dpg-clo95fuqc21c73e4tuk0-a/user_todos?sslmode=require"
-  },
+  "db_render_uri": "postgres://user_todos_jr43_user:AP4JuWavQ3MsBWPnwRYVVyl4kHQKsMZN@dpg-clofe2ggqk6s73e8b7r0-a/user_todos_jr43?sslmode=require",
   "db_onrender": {
-    "host": "dpg-clo95fuqc21c73e4tuk0-a",
+    "host": "dpg-clofe2ggqk6s73e8b7r0-a",
     "port": 5432,
-    "user": "makroot",
-    "password": "VFPJBPKaLTdF1IDJRW3ciRh8Dq4hvEgGs",
-    "database": "user_todos",
+    "user": "user_todos_jr43_user",
+    "password": "AP4JuWavQ3MsBWPnwRYVVyl4kHQKsMZN",
+    "database": "user_todos_jr43",
     "ssl": true
   }
 }

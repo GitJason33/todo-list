@@ -3,7 +3,7 @@ import config from "@/../config.js";
 
 
 const LOGIN_COOKIE = config["login-cookie"];
-const BASE_URL = `http://localhost:4500/api`;
+const BASE_URL = config["api-domain"];
 
 const headers = {
   "Content-Type": "application/json",

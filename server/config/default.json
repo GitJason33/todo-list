@@ -1,6 +1,9 @@
 {
   "API_KEY": "kazablanca",
-  "allowed_clients": "*",
+  "allowed_clients": [
+    "https://todolistjason33.onrender.com",
+    "http://localhost:5173"
+  ],
   "jwtSecret": "Secret_Shut_The_Fuck_Up, shhhh",
   "db": {
     "host": "localhost",

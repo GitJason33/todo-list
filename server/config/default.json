@@ -11,5 +11,13 @@
     "user": "postgres",
     "password": "password",
     "database": "user_todos"
+  },
+  "db_onrender": {
+    "host": "dpg-clo95fuqc21c73e4tuk0-a",
+    "port": 5432,
+    "user": "makroot",
+    "password": "VFPJBPKaLTdF1IDJRW3ciRh8Dq4hvEgGs",
+    "database": "user_todos",
+    "ssl": true
   }
 }

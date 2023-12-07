@@ -3,11 +3,11 @@ import config from "@/../config.js";
 
 
 const LOGIN_COOKIE = config["login-cookie"];
-const BASE_URL = import.meta.env.API_DOMAIN;
+const BASE_URL = import.meta.env.VITE_API_DOMAIN;
 
 const headers = {
   "Content-Type": "application/json",
-  "api-key": import.meta.env.API_KEY,
+  "api-key": import.meta.env.VITE_API_KEY,
   "x-auth-token": Cookie.get(LOGIN_COOKIE) ?? "",
 };
 

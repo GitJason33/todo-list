@@ -1,6 +1,6 @@
 import Cookie from "js-cookie";
 import config from "@/../config.js";
-import { env } from "node:process";
+import { env } from "process";
 
 
 const LOGIN_COOKIE = config["login-cookie"];

@@ -2,7 +2,7 @@ const express = require('express');
 const isLoggedIn = require('../middlewares/isLoggedIn');
 
 const TaskModel = require("../../models/task-model");
-const { removeEmptyInputs, toInt } = require("../tools/functions.js");
+const { toInt } = require("../tools/functions.js");
 const { TaskValidator } = require('../tools/validators.js');
 
 const router = express.Router();

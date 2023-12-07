@@ -1,13 +1,14 @@
 import Cookie from "js-cookie";
 import config from "@/../config.js";
+import { env } from "node:process";
 
 
 const LOGIN_COOKIE = config["login-cookie"];
-const BASE_URL = config["api-domain"];
+const BASE_URL = env.API_DOMAIN;
 
 const headers = {
   "Content-Type": "application/json",
-  "api-key": config["api-key"],
+  "api-key": env.API_KEY,
   "x-auth-token": Cookie.get(LOGIN_COOKIE) ?? "",
 };
 

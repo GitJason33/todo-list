@@ -7,7 +7,7 @@ module.exports.createJWToken = function (user_id) {
     id: Number(user_id)
   }
 
-  const token = jwt.sign(payload, config.get("jwtSecret"), {
+  const token = jwt.sign(payload, process.env.jwtSecret, {
     expiresIn: "30d"
   });
 

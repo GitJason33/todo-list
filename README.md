@@ -82,3 +82,29 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+
+## deploying postgreSQL on render
+
+1. it's a little complicated to do so, but first of all you must have a web service 
+(mostly an API) and create a postgresql database in render, both on same region 
+(example frankfurt)
+
+2. the postgresql database should be renewed every 89 days to remain free.
+
+3. postgresql is accessible through a client like pgadmin4 by using external
+connection string and seperate the hostname, password, db from it. 
+in pgadmin, register a new server by right clicking on [servers] tab, and 
+then fill the infos required as so.
+
+4. then you can manually manipulate data and see the database on your pc
+
+5. in nodejs, you will need a package like [pg] in order to establish a connection
+using the internal connection string provided by render. the configs must be like so:
+```
+const db_pool = new Pool({
+  connectionString: "...",
+})
+```
+
+6. and voila, thats it.

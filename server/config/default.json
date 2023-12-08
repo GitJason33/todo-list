@@ -1,23 +1,9 @@
 {
-  "API_KEY": "kazablanca",
-  "allowed_clients": [
-    "https://todolistjason33.onrender.com",
-    "http://localhost:5173"
-  ],
-  "jwtSecret": "Secret_Shut_The_Fuck_Up, shhhh",
   "db": {
     "host": "localhost",
     "port": 5432,
     "user": "postgres",
     "password": "password",
     "database": "user_todos"
-  },
-  "db_render_uri": "postgres://user_todos_jr43_user:AP4JuWavQ3MsBWPnwRYVVyl4kHQKsMZN@dpg-clofe2ggqk6s73e8b7r0-a/user_todos_jr43",
-  "db_onrender": {
-    "host": "dpg-clofe2ggqk6s73e8b7r0-a",
-    "port": 5432,
-    "user": "user_todos_jr43_user",
-    "password": "AP4JuWavQ3MsBWPnwRYVVyl4kHQKsMZN",
-    "database": "user_todos_jr43"
   }
 }

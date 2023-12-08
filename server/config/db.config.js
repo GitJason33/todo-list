@@ -1,10 +1,16 @@
 const postgres = require('pg');
-const config = require('config');
+// const config = require('config');
 
 
 const pool = new postgres.Pool({
-  connectionString: config.get("db_render_uri"),
-  ...config.get("db_onrender"),
+  connectionString: process.env.db_connection_string,
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  password: process.env.DB_PASS,
+  user: process.env.DB_USER,
+  database: process.env.DB_NAME,
+
+  // ...config.get("db"), // for localhost
 });
 
 module.exports = pool;

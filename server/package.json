@@ -6,7 +6,6 @@
   "scripts": {
     "start": "nodemon ./dist/server.bundle.js",
     "dev": "webpack --watch",
-    
     "preview": "node ./dist/server.bundle.js",
     "build": "webpack"
   },

@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const config = require('config');
+// const config = require('config');
 
 const UserModel = require('../../models/user-model.js');
 const { UserValidator } = require('../tools/validators.js');
@@ -12,7 +12,7 @@ async function isLoggedIn(req, resp, next) {
     UserValidator.notLoggedIn(token);
 
 
-    const decodedToken = jwt.verify(token, config.get("jwtSecret"));
+    const decodedToken = jwt.verify(token, process.env.jwtSecret);
     const user_id = decodedToken.id;
 
 

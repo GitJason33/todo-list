@@ -5,5 +5,9 @@
     "user": "postgres",
     "password": "password",
     "database": "user_todos"
-  }
+  },
+  "ALLOWED_CLIENTS": [
+    "https://todolistjason33.onrender.com",
+    "http://localhost:5173"
+  ]
 }

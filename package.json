@@ -1,15 +1,15 @@
 {
   "name": "todo_list",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "this is my todo list project. I am GitJason33",
 
   "devDependencies": {
     "concurrently": "^8.2.2"
   },
   "scripts": {
-    "server": "concurrently \"npm run dev --prefix ./server\" \"npm start --prefix ./server\"",
+    "server": "concurrently \"npm run dev --prefix ./server\" \"npm run bundle --prefix ./server\"",
     "client": "npm run dev --prefix ./client"
   },
-  "author": "GitJason33",
+  "author": "Jason Dirany",
   "license": "MIT"
 }

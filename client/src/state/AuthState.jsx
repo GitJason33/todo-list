@@ -3,10 +3,9 @@ import UserService from "@/services/user-service";
 
 import { LOAD_USER, LOGIN, LOGOUT } from "./actions";
 import Cookie from "js-cookie";
-import config from "@/../config";
 
 
-const LOGIN_COOKIE = config["login-cookie"];
+const LOGIN_COOKIE = import.meta.env.VITE_LOGIN_COOKIE;
 export const AuthContext = createContext();
 
 

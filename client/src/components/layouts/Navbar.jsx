@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import styles from "@/styles/layouts.module.scss";
-import { useAuth } from "@/state/contextHooks";
+import { useAuth, useConfirm } from "@/state/contextHooks";
 
 
 export default function Navbar() {
@@ -41,6 +41,8 @@ export default function Navbar() {
 
 
 function NavMenu({ logout }) {
+  const { openConfirm } = useConfirm();
+
   return (
     <aside className="flex items-center">
       {/* this is hidden all time */}
@@ -63,7 +65,7 @@ function NavMenu({ logout }) {
 
         <button 
           className="!text-high" 
-          onClick={logout}
+          onClick={() => openConfirm("Logout of your account?", logout)}
         >
           <i className="fa-solid fa-right-from-bracket"></i>
           {" Logout"}

@@ -1,3 +1,5 @@
+require("dotenv").configDotenv({ path: "./.env" });
+
 const express = require('express');
 const cors = require('cors');
 
@@ -11,7 +13,6 @@ const taskRouter = require("./controllers/routes/task-route.js");
 // init variables
 const app = express();
 const PORT = process.env.PORT || 12_000;
-
 
 
 // middlewares

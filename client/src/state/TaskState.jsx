@@ -36,11 +36,15 @@ export const TaskState = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    if(isLoggedIn) getAllTodos();
+    getAllTodos();
   }, [isLoggedIn]);
 
 
   const getAllTodos = async () => {
+    if(!isLoggedIn) {
+      dispatch({ type: GET_TODOS, payload: [] });
+      return;
+    }
     const [todos, err] = await TaskService.getAll();
 
 

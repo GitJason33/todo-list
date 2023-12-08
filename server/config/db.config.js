@@ -1,17 +1,26 @@
 const postgres = require('pg');
-// const config = require('config');
 
 
-const pool = new postgres.Pool({
+const poolSettings = process.env.DEV_MODE == 'dev' 
+? {
+  host: process.env.DB_LH_HOST,
+  port: process.env.DB_LH_PORT,
+  password: process.env.DB_LH_PASS,
+  user: process.env.DB_LH_USER,
+  database: process.env.DB_LH_NAME,
+}
+: {
   connectionString: process.env.db_connection_string,
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
   password: process.env.DB_PASS,
   user: process.env.DB_USER,
   database: process.env.DB_NAME,
+};
 
-  // ...config.get("db"), // for localhost
-});
+
+const pool = new postgres.Pool(poolSettings);
+
 
 module.exports = pool;
 

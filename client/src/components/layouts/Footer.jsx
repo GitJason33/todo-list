@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom';
 import styles from '@/styles/layouts.module.scss';
-import { useAuth } from '@/state/contextHooks';
+import { useAuth, useConfirm } from '@/state/contextHooks';
 
 
 export default function Footer() {
   const { isLoggedIn, logoutUser } = useAuth();
+  const { openConfirm } = useConfirm();
 
 
   return (
@@ -52,7 +53,7 @@ export default function Footer() {
             {isLoggedIn && (
               <button 
                 className={`${styles.footItem} !text-high font-bold`}
-                onClick={logoutUser}
+                onClick={() => openConfirm("Logout of your account?", logoutUser)}
               >
                 <i className="fa-solid fa-right-from-bracket"></i>
                 {' Logout'}

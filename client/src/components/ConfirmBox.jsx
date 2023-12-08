@@ -17,7 +17,7 @@ export default function ConfirmBox() {
 
         <div className="flex justify-between gap-3">
           <button 
-            className="btn grow w-1/2 bg-weak/20" 
+            className="btn grow w-1/2 btn-cancel" 
             onClick={handleCancel}
           >CANCEL
           </button>

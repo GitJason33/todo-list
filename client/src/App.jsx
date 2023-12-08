@@ -27,9 +27,9 @@ function App() {
 
       <BrowserRouter>
         <Header />
-        <Navbar />
-
+        
         <ConfirmState>
+          <Navbar />
           <ConfirmBox />
 
           <Routes>
@@ -46,9 +46,9 @@ function App() {
 
             <Route path="/*" element={<NotFound thing="page"/>}/>
           </Routes>
-        </ConfirmState>
 
-        <Footer />
+          <Footer />
+        </ConfirmState>
       </BrowserRouter>
 
       </TaskState>

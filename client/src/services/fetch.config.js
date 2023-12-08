@@ -1,15 +1,18 @@
 import Cookie from "js-cookie";
-import config from "@/../config.js";
 
 
-const LOGIN_COOKIE = config["login-cookie"];
-const BASE_URL = import.meta.env.VITE_API_DOMAIN;
+const LOGIN_COOKIE = import.meta.env.VITE_LOGIN_COOKIE;
+
+const BASE_URL = import.meta.env.VITE_DEV_MODE == 'dev' 
+  ? import.meta.env.VITE_API_LOCALHOST 
+  : import.meta.env.VITE_API_URL;
 
 const headers = {
   "Content-Type": "application/json",
   "api-key": import.meta.env.VITE_API_KEY,
   "x-auth-token": Cookie.get(LOGIN_COOKIE) ?? "",
 };
+
 
 
 export const myFetch = async (method, endpoint, options = {}) => {

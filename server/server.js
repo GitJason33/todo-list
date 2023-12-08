@@ -15,7 +15,9 @@ const PORT = process.env.PORT || 12_000;
 
 
 // middlewares
-console.log(process.env.ALLOWED_CLIENTS);
+const CORS_CLIENTS = JSON.parse(process.env.ALLOWED_CLIENTS);
+console.log({ cors_clients: CORS_CLIENTS, type: typeof CORS_CLIENTS });
+
 app.use(cors({ origin: JSON.parse(process.env.ALLOWED_CLIENTS) }));
 app.use(APIKeyChecker);
 app.use(express.json());

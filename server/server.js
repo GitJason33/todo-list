@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-// const config = require('config');
+require("dotenv").config();
 
 const ErrorHandler = require("./controllers/middlewares/ErrorHandler.js");
 const APIKeyChecker = require("./controllers/middlewares/ApiKeyChecker.js");
@@ -15,6 +15,7 @@ const PORT = process.env.PORT || 12_000;
 
 
 // middlewares
+console.log(process.env.ALLOWED_CLIENTS);
 app.use(cors({ origin: JSON.parse(process.env.ALLOWED_CLIENTS) }));
 app.use(APIKeyChecker);
 app.use(express.json());

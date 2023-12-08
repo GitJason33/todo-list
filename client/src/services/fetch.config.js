@@ -1,14 +1,13 @@
 import Cookie from "js-cookie";
 import config from "@/../config.js";
-import process from "process";
 
 
 const LOGIN_COOKIE = config["login-cookie"];
-const BASE_URL = process.env.API_DOMAIN;
+const BASE_URL = import.meta.env.VITE_API_DOMAIN;
 
 const headers = {
   "Content-Type": "application/json",
-  "api-key": process.env.API_KEY,
+  "api-key": import.meta.env.VITE_API_KEY,
   "x-auth-token": Cookie.get(LOGIN_COOKIE) ?? "",
 };
 

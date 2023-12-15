@@ -10,13 +10,13 @@ const BASE_URL = import.meta.env.VITE_DEV_MODE == 'dev'
 const headers = {
   "Content-Type": "application/json",
   "api-key": import.meta.env.VITE_API_KEY,
-  "x-auth-token": Cookie.get(LOGIN_COOKIE) ?? "",
 };
 
 
 
 export const myFetch = async (method, endpoint, options = {}) => {
-  options?.body && (options.body = JSON.stringify(options.body))
+  options?.body && (options.body = JSON.stringify(options.body));
+  headers['x-auth-token'] = Cookie.get(LOGIN_COOKIE) ?? "";
 
   const resp = await fetch(BASE_URL + endpoint, {
     method,

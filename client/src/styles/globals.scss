@@ -6,6 +6,9 @@
 @tailwind utilities;
 
 
+@import "./loader.scss";
+@import "./alert.scss";
+
 
 body {
   @apply 
@@ -94,7 +97,7 @@ input:-webkit-autofill:active {
   .is-modal {
     @apply 
       bg-dark/80
-      w-full h-full 
+      w-screen h-screen 
       fixed top-0 left-0 z-[1000];
   }
 

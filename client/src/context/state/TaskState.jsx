@@ -7,9 +7,10 @@ import {
   GET_TODO, 
   GET_TODOS, 
   MARK_DONE 
-} from './actions';
+} from '../actions';
 import TaskService from '@/services/task-service';
-import { useAuth } from './contextHooks';
+import { useAlert, useAuth, useLoading } from '../contextHooks';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -28,7 +29,11 @@ export const TaskState = ({ children }) => {
     sort: 'priority h to l',
   };
   const [state, dispatch] = useReducer(TaskReducer, initialState);
-  const { isLoggedIn } = useAuth();
+
+  const { isLoggedIn, user } = useAuth();
+  const { Alert } = useAlert();
+  const { loading } = useLoading();
+  const redirect = useNavigate();
 
 
   useEffect(() => {
@@ -37,7 +42,7 @@ export const TaskState = ({ children }) => {
 
   useEffect(() => {
     getAllTodos();
-  }, [isLoggedIn]);
+  }, [isLoggedIn, user]);
 
 
   const getAllTodos = async () => {
@@ -45,21 +50,24 @@ export const TaskState = ({ children }) => {
       dispatch({ type: GET_TODOS, payload: [] });
       return;
     }
+    if(window.location.pathname === "/dashboard") loading.start();
     const [todos, err] = await TaskService.getAll();
+    loading.stop();
 
 
-    if(err) console.error(err);
+    if(err) console.error("🚀 ~ file: TaskState.jsx:57 ~ getAllTodos ~ err:", err)
     else dispatch({ type: GET_TODOS, payload: todos });
-  } 
+  }
 
 
   const getExampleTodos = async () => {
     const [todos, err] = await TaskService.getExamples();
 
 
-    if(err) console.error(err);
+    if(err) console.error("🚀 ~ file: TaskState.jsx:68 ~ getExampleTodos ~ err:", err);
     else dispatch({ type: GET_EXAMPLE_TODOS, payload: todos });
   } 
+    
   
   
   /** checks if the todo is already in the app before requesting it from the server */
@@ -71,10 +79,12 @@ export const TaskState = ({ children }) => {
       dispatch({ type: GET_TODO, payload: potentiallyHere })
     }
     else {
+      if(window.location.pathname.startsWith("/todo/")) loading.start();
       const [todo, err] = await TaskService.getOne(id);
-      
+      loading.stop();
 
-      if(err) console.error(err);
+
+      if(err) console.error("🚀 ~ file: TaskState.jsx:83 ~ getOneTodo ~ err:", err)
       else dispatch({ type: GET_TODO, payload: todo });
     }
   }
@@ -82,58 +92,58 @@ export const TaskState = ({ children }) => {
   
   
   const createTodo = async (data) => {
+    loading.start();
     const [todo, err] = await TaskService.create(data);
-    
+    loading.stop();
 
-    if(err) {
-      alert(`Operation failed: ${err}`);
-      return false;
-    }
+    if(err) Alert.open(`Operation failed - ${err}`);
     else {
       dispatch({ type: CREATE_TODO, payload: todo });
-      return true;
+      redirect('/dashboard', { replace: true });
     }
   }
   
   
   
   const editTodo = async (id, data) => {
+    loading.start();
     const [, err] = await TaskService.edit(id, data);
+    loading.stop();
     
 
-    if(err) {
-      alert(`Operation failed: ${err}`);
-      return false;
-    }
+    if(err) Alert.open(`Operation failed - ${err}`);
     else {
       dispatch({ type: EDIT_TODO, payload: { id, data } });
-      return true;
+      redirect('/dashboard', { replace: true });
     }
   }
   
   
   
   const markTodoDone = async (id) => {
-    const [, err] = await TaskService.markAsDone(id);
+    loading.start();
+    const [, err] = await TaskService.markAsDone(id);    
+    loading.stop();
     
 
-    if(err) alert(`Operation failed: ${err}`);
-    else    dispatch({ type: MARK_DONE, payload: id });
+    if(err) Alert.open(`Operation failed - ${err}`);
+    else {
+      dispatch({ type: MARK_DONE, payload: id });
+    }
   }
   
   
   
   const deleteTodo = async (id) => {
+    loading.start();
     const [, err] = await TaskService.delete(id);
-    
+    loading.stop();
 
-    if(err) {
-      alert(`Operation failed: ${err}`);
-      return false;
-    }
+
+    if(err) Alert.open(`Operation failed - ${err}`);
     else {
       dispatch({ type: DELETE_TODO, payload: id });
-      return true;
+      redirect('/dashboard', { replace: true });
     }
   }
 
@@ -141,8 +151,8 @@ export const TaskState = ({ children }) => {
 
   /** count how many todos there are */
   const todosCount = useMemo(
-    () => state.todos.length, 
-  [state.todos]);
+    () => state.todos.length, [state.todos]
+  );
 
 
 

@@ -1,5 +1,5 @@
 import { Todo } from "@/components/Todo";
-import { useTodo } from "@/state/contextHooks";
+import { useTodo } from "@/context/contextHooks";
 import styles from "@/styles/home.module.scss";
 import { AddTodo } from "./TodoManager";
 import { Link } from "react-router-dom";

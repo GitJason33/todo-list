@@ -1,8 +1,10 @@
 import { createContext, useEffect, useReducer } from "react";
 import UserService from "@/services/user-service";
 
-import { LOAD_USER, LOGIN, LOGOUT } from "./actions";
+import { LOAD_USER, LOGIN, LOGOUT } from "../actions";
 import Cookie from "js-cookie";
+import { useAlert, useLoading } from "../contextHooks";
+import { useNavigate } from "react-router-dom";
 
 
 const LOGIN_COOKIE = import.meta.env.VITE_LOGIN_COOKIE;
@@ -17,6 +19,10 @@ export function AuthState({ children }){
   }
   const [state, dispatch] = useReducer(AuthReducer, initialState);
 
+  const { Alert } = useAlert();
+  const { loading } = useLoading();
+  const redirect = useNavigate();
+
 
   // load the user on login, register and start of page
   useEffect(() => {
@@ -27,6 +33,7 @@ export function AuthState({ children }){
   const loadUser = async () => {
     const [data, err] = await UserService.getInfo();
     
+
     if(err) console.error(err);
     else    dispatch({ type: LOAD_USER, payload: data });
   }
@@ -35,21 +42,21 @@ export function AuthState({ children }){
 
   /** data = { name, email, password } :object of strings */
   const registerUser = async (data) => {
+    loading.start();
     const [info, err] = await UserService.register(data);
+    loading.stop();
 
 
-    if(err){
-      alert(err);
-      return false;
-    }
+    if(err) Alert.open(err);
     else {
       Cookie.set(LOGIN_COOKIE, info.token, {
         expires: 30,
       });
-      alert("Successfully registered!");
+
+      Alert.open(null, "Successfully registered!");
+      redirect('/dashboard', { replace: true });
 
       dispatch({ type: LOGIN, payload: info.user });
-      return true;
     }
   }
 
@@ -57,21 +64,21 @@ export function AuthState({ children }){
 
   /** data = { email, password } :object of strings */
   const loginUser = async (data) => {
+    loading.start();
     const [info, err] = await UserService.login(data);
+    loading.stop();
 
 
-    if(err){
-      alert(err);
-      return false;
-    }
+    if(err) Alert.open(err);
     else {
       Cookie.set(LOGIN_COOKIE, info.token, {
         expires: 30,
       });
-      alert("Successfully logged in!");
+      
+      Alert.open(null, "Successfully logged in!");
+      redirect('/dashboard', { replace: true });
 
       dispatch({ type: LOGIN, payload: info.user });
-      return true;
     }
   }
 
@@ -80,7 +87,9 @@ export function AuthState({ children }){
   const logoutUser = () => {
     Cookie.remove(LOGIN_COOKIE);
 
-    alert("Successfully logged out!");
+    Alert.open(null, "Successfully logged out!");
+    redirect("/", { replace: true });
+
     dispatch({ type: LOGOUT });
   }
 

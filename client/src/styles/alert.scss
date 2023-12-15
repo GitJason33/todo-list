@@ -1,0 +1,28 @@
+.alert {
+  @apply 
+    bg-dark/80 backdrop-blur-xl p-3 
+    border my-rounding
+    fixed z-[100] bottom-1.5 right-1.5 
+    sc-mid:max-w-[400px] max-w-[calc(100%-12px)] w-full;
+
+  animation: throw-alert 750ms;
+}
+
+.alert-close-icon {
+  @apply 
+    text-3xl
+    absolute right-3 top-0
+    cursor-pointer transition-colors 
+    hover:text-prime;
+}
+
+@keyframes throw-alert {
+  0% {
+    opacity: 0;
+    right: -96px;
+  };
+  100%{
+    opacity: 1;
+    right: 6px;
+  };
+}

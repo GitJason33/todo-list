@@ -1,4 +1,4 @@
-import { useAuth } from "@/state/contextHooks";
+import { useAuth } from "@/context/contextHooks";
 
 
 export default function Header() {

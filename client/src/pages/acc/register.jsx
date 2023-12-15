@@ -1,12 +1,10 @@
 import { useState } from "react";
 import LoginForm from "@/components/LoginForm";
-import { useAuth } from "@/state/contextHooks";
-import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/context/contextHooks";
 
 
 export default function Register() {
   const { registerUser } = useAuth();
-  const redirect = useNavigate();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -17,12 +15,7 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const allGood = await registerUser(formData);
-
-    if(allGood){ 
-      redirect('/dashboard');
-      redirect(0);
-    }
+    registerUser(formData);
   }
 
 

@@ -1,24 +1,20 @@
 import { useEffect } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import NotFound from "./notFound";
-import { useConfirm, useTodo } from "@/state/contextHooks";
+import { useConfirm, useLoading, useTodo } from "@/context/contextHooks";
 
 
 export default function TodoDetails() {
   const { id } = useParams();
   const { currentTodo, getOneTodo, deleteTodo } = useTodo();
   const { openConfirm } = useConfirm();
-  const redirect = useNavigate();
+  const { isLoading } = useLoading();
 
 
   const handleDelete = () => {
     openConfirm("Delete task? Action is permanent!", async () => {
-      if(id > 6){ // ignore examples
-        const allGood = await deleteTodo(id);
-        
-        if(allGood) redirect('/dashboard', { replace: true });
-      }
+      if(id > 6) deleteTodo(id);
     })
   }
 
@@ -40,7 +36,7 @@ export default function TodoDetails() {
           <table className="w-full">
             <tbody className="table-diff-bgs">
               {Object.keys(currentTodo).map(
-                (key, idx) => currentTodo[key] && key !== "user_id" && key !== "done" ? (
+                (key, idx) => currentTodo[key] && key !== "user_id" && key !== "done" && key !== "description" ? (
                   <tr key={idx}>
                     <th className="px-3 py-1.5 text-left text-prime">{key}</th>
                     <td className="whitespace-nowrap px-3 py-1.5">{
@@ -55,6 +51,7 @@ export default function TodoDetails() {
           </table>
         </div>
 
+
         <div className="flex justify-end gap-3 mt-3">
           {!currentTodo.done && (
             <Link to={`/todo/edit/${id}`} className="btn btn-second">
@@ -63,11 +60,16 @@ export default function TodoDetails() {
             </Link>
           )}
 
-          <button className="btn bg-high text-dark font-bold" onClick={handleDelete}>
+          <button className="btn bg-high text-dark font-bold" onClick={handleDelete} disabled={isLoading}>
             <i className="fa-solid fa-trash"></i>
             {" DELETE"}
           </button>
         </div>
+        
+        <section className="mt-3">
+          <h3 className="text-prime font-bold">Description:</h3>
+          <p>{currentTodo.description}</p>
+        </section>
       </div>
     </main>
   ) : (

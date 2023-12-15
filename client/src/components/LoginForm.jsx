@@ -1,8 +1,11 @@
+import { useLoading } from "@/context/contextHooks";
 import { Link } from "react-router-dom";
 
 
 /** children should be the inputs with their labels you put */
 export default function LoginForm({ children, title, btnLabel, handleSubmit, userFallback = null }) {
+  const { isLoading } = useLoading();
+
   return (
     <div className="
       w-full max-w-[500px] 
@@ -21,7 +24,7 @@ export default function LoginForm({ children, title, btnLabel, handleSubmit, use
             block btn mx-auto
             bg-second text-dark font-bold
             uppercase 
-          `}>
+          `} disabled={isLoading}>
             {btnLabel}
           </button>
 

@@ -1,13 +1,11 @@
 import { useState } from "react";
 
 import LoginForm from "@/components/LoginForm";
-import { useAuth } from "@/state/contextHooks";
-import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/context/contextHooks";
 
 
 export default function Login() {
   const { loginUser } = useAuth();
-  const redirect = useNavigate();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -16,13 +14,8 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const allGood = await loginUser(formData);
-
-    if(allGood){ 
-      redirect('/dashboard');
-      redirect(0);
-    }
+    
+    loginUser(formData);
   }
 
 

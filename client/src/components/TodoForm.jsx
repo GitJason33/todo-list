@@ -1,4 +1,10 @@
-export default function TodoForm({ handleSubmit, btnLabel, state, setState, className }) {
+import { useLoading } from "@/context/contextHooks";
+import { Link } from "react-router-dom";
+
+
+export default function TodoForm({ handleSubmit, btnLabel, state, setState, className, isExample, isLoggedIn }) {
+  const { isLoading } = useLoading();
+  
   const handleStateChange = (e, stateKey) => {
     setState(prev => ({ ...prev, [stateKey]: e.target.value }))
   }
@@ -114,7 +120,16 @@ export default function TodoForm({ handleSubmit, btnLabel, state, setState, clas
 
 
         <div className="flex justify-end">
-          <button type="submit" className="btn btn-second">{btnLabel}</button>
+          {isExample ? (
+            <Link 
+              to={!isLoggedIn ? "/acc/login" : "/todo/add"} 
+              className="btn btn-second"
+            >
+              {btnLabel}
+            </Link>
+          ) : (
+            <button type="submit" className="btn btn-second" disabled={isLoading}>{btnLabel}</button>
+          )}
         </div>
       </form>
     </main>

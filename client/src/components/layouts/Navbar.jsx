@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import styles from "@/styles/layouts.module.scss";
-import { useAuth, useConfirm } from "@/state/contextHooks";
+import { useAuth, useConfirm } from "@/context/contextHooks";
 
 
 export default function Navbar() {

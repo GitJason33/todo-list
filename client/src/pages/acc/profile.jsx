@@ -1,5 +1,5 @@
-import { useAuth } from "@/state/contextHooks";
-import { Link } from "react-router-dom";
+import LoginRequired from "@/components/LoginRequired";
+import { useAuth } from "@/context/contextHooks";
 
 
 export default function Profile() {
@@ -24,10 +24,6 @@ export default function Profile() {
       </table>
     </main>
   ) : (
-    <main className="py-6 px-3">
-      {"You have to "}
-      <Link to="/acc/login" className="is-link">{"Login"}</Link> 
-      {" in order to view your account information"}
-    </main>
+    <LoginRequired reason="view your account information"/>
   )
 }

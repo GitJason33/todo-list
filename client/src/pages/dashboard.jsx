@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 import { Todo } from "@/components/Todo";
-import { useTodo } from "@/state/contextHooks";
+import { useTodo } from "@/context/contextHooks";
 
 
 export default function Dashboard() {

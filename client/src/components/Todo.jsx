@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 import styles from "@/styles/todos.module.scss";
 import { dropdown } from "@/styles/layouts.module.scss";
-import { useConfirm, useTodo } from "@/state/contextHooks";
+import { useConfirm, useTodo } from "@/context/contextHooks";
 
 
 export function Todo({ 

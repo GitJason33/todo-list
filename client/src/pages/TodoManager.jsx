@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { useConfirm, useTodo } from "@/state/contextHooks";
+import { useParams } from "react-router-dom";
+import { useAuth, useConfirm, useTodo } from "@/context/contextHooks";
 
 import TodoForm from "@/components/TodoForm";
 import { evalDueDate, extractDate, extractTime } from "@/tools/dateUtils";
+import LoginRequired from "@/components/LoginRequired";
 
 
 export function AddTodo({ className, isExample = false }) {
   const { createTodo } = useTodo();
   const { openConfirm } = useConfirm();
-  const redirect = useNavigate();
+  const { isLoggedIn } = useAuth();
 
 
   const [formData, setFormData] = useState({
@@ -32,23 +33,23 @@ export function AddTodo({ className, isExample = false }) {
     delete todoData.due_time;
 
     openConfirm("Add new todo?", async () => {
-      if(!isExample){
-        const allGood = await createTodo(todoData);
-        
-        if(allGood) redirect('/dashboard', { replace: true });
-      }
+      if(!isExample) createTodo(todoData);
     });
   }
 
 
-  return (
+  return isLoggedIn || isExample ? (
     <TodoForm
       handleSubmit={handleAddSubmit}
       btnLabel="Add Todo"
       state={formData}
       setState={setFormData}
       className={className}
+      isExample={isExample}
+      isLoggedIn={isLoggedIn}
     />
+  ) : (
+    <LoginRequired reason="add todos" />
   )
 }
 
@@ -56,10 +57,11 @@ export function AddTodo({ className, isExample = false }) {
 
 export function EditTodo() {
   const { id } = useParams();
-  const redirect = useNavigate();
 
   const { editTodo, getOneTodo, currentTodo } = useTodo();
   const { openConfirm } = useConfirm();
+  const { isLoggedIn } = useAuth();
+
 
   const [formData, setFormData] = useState({
     title: "",
@@ -96,21 +98,19 @@ export function EditTodo() {
     delete todoData.due_time;
 
     openConfirm("Confirm Edit?", async () => {
-      if(id > 6){
-        const allGood = await editTodo(id, todoData);
-  
-        if(allGood) redirect('/dashboard', { replace: true });
-      }
+      if(id > 6) editTodo(id, todoData);
     })
   }
 
 
-  return (
+  return isLoggedIn ? (
     <TodoForm
       handleSubmit={handleEditSubmit}
       btnLabel="Edit Todo"
       state={formData}
       setState={setFormData}
     />
+  ) : (
+    <LoginRequired reason="edit todos" />
   )
 }

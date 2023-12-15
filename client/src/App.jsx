@@ -1,12 +1,14 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { AuthState } from "./state/AuthState";
-import { TaskState } from "./state/TaskState";
-import { ConfirmState } from "./state/ConfirmState";
+import { AuthState } from "./context/state/AuthState";
+import { TaskState } from "./context/state/TaskState";
+import { ConfirmState } from "./context/state/ConfirmState";
+import { LoadingState } from "./context/state/LoadingState";
 
 import Header from "./components/layouts/Header";
 import Navbar from "./components/layouts/Navbar";
 import Footer from "./components/layouts/Footer";
 import ConfirmBox from "./components/ConfirmBox";
+import Loader from "./components/Loader";
 
 import Home from "./pages/home";
 import Dashboard from "./pages/dashboard";
@@ -18,19 +20,22 @@ import Register from "./pages/acc/register";
 import Profile from "./pages/acc/profile";
 
 import "./styles/globals.scss";
+import AlertState from "./context/state/AlertState";
+import Alert from "./components/Alert";
 
 
 function App() {
   return (
-    <AuthState>
-      <TaskState>
-
-      <BrowserRouter>
+    <BrowserRouter>
+      <AlertState><LoadingState><AuthState><TaskState>
+        
         <Header />
+        <Loader />
         
         <ConfirmState>
-          <Navbar />
           <ConfirmBox />
+          <Navbar />
+          <Alert />
 
           <Routes>
             <Route path="/" element={<Home />} />
@@ -49,10 +54,9 @@ function App() {
 
           <Footer />
         </ConfirmState>
-      </BrowserRouter>
 
-      </TaskState>
-    </AuthState>
+      </TaskState></AuthState></LoadingState></AlertState>
+    </BrowserRouter>
   )
 }
 

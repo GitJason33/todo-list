@@ -1,7 +1,7 @@
 import { useAlert } from "@/context/contextHooks";
 
 export default function Alert() {
-  const { open, msg, isError, closeAlert } = useAlert();
+  const { open, msg, isError, Alert } = useAlert();
   
   const styles = {
     bg: isError ? "!bg-high" : "!bg-low",
@@ -14,7 +14,7 @@ export default function Alert() {
   return open && (
     <aside className={`alert ${styles.border}`}>
       <button 
-        onClick={closeAlert} 
+        onClick={Alert.close} 
         className="alert-close-icon"
       >
         x

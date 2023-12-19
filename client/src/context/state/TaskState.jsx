@@ -11,6 +11,7 @@ import {
 import TaskService from '@/services/task-service';
 import { useAlert, useAuth, useLoading } from '../contextHooks';
 import { useNavigate } from 'react-router-dom';
+import {cacheExamples, getCachedExamples} from "@/tools/caching.js";
 
 
 
@@ -61,24 +62,48 @@ export const TaskState = ({ children }) => {
 
 
   const getExampleTodos = async () => {
-    const [todos, err] = await TaskService.getExamples();
+    let todos = getCachedExamples();
+
+    if(!todos){
+      const [todos, err] = await TaskService.getExamples();
 
 
-    if(err) console.error("🚀 ~ file: TaskState.jsx:68 ~ getExampleTodos ~ err:", err);
-    else dispatch({ type: GET_EXAMPLE_TODOS, payload: todos });
-  } 
+      if(err) console.error("🚀 ~ file: TaskState.jsx:68 ~ getExampleTodos ~ err:", err);
+      else {
+        cacheExamples(todos);
+        dispatch({type: GET_EXAMPLE_TODOS, payload: todos});
+      }
+    } else{
+      dispatch({ type: GET_EXAMPLE_TODOS, payload: todos });
+    }
+  }
     
   
   
   /** checks if the todo is already in the app before requesting it from the server */
   const getOneTodo = async (id) => {
-    const [potentiallyHere] = state.todos.filter(todo => todo._id === id);
+    // case if target is the currentTodo already
+    if(state.currentTodo !== null && state.currentTodo._id == id)
+      return;
 
+    // case if it's an example
+    if(id <= 6){
+      const [example] = state.exampleTodos.filter((todo) => todo._id == id);
+
+      if(example) {
+        dispatch({type: GET_TODO, payload: example});
+        return;
+      }
+    }
+
+    // case if it's already in the todos array
+    const [potentiallyHere] = state.todos.filter(todo => todo._id == id);
 
     if(potentiallyHere){
       dispatch({ type: GET_TODO, payload: potentiallyHere })
     }
     else {
+      // default case to fetch from server
       if(window.location.pathname.startsWith("/todo/")) loading.start();
       const [todo, err] = await TaskService.getOne(id);
       loading.stop();

@@ -2,7 +2,6 @@ require("dotenv").configDotenv({ path: "./.env" });
 
 const express = require('express');
 const cors = require('cors');
-const expressMonitor = require('express-status-monitor');
 const logger = require("morgan");
 
 const ErrorHandler = require("./controllers/middlewares/ErrorHandler.js");
@@ -19,7 +18,6 @@ const PORT = process.env.PORT || 12_000;
 
 // middlewares
 app.use(logger('dev'));
-app.use(expressMonitor({ path: "/api/monitor" }));
 app.use(cors({ origin: JSON.parse(process.env.ALLOWED_CLIENTS) }));
 app.use(APIKeyChecker);
 app.use(express.json());
@@ -44,7 +42,7 @@ app.use(ErrorHandler);
 app.listen(
   PORT, 
   () => console.log(`API running at ${
-    process.env.DEV_MODE == 'dev' 
+    process.env.DEV_MODE === 'dev' 
       ? 'http://localhost:12000/api'
       : 'http://api-todolistjason33/api'
   }`)

@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import _ from "lodash";
 
 export default function ScrollToTop() {
   useEffect(() => {
@@ -14,7 +15,7 @@ export default function ScrollToTop() {
         scrollBtn.style.display = 'none';
     };
 
-    window.onscroll = showScrollButton;
+    window.onscroll = _.debounce(showScrollButton, 100);
   }, []);
 
   return (

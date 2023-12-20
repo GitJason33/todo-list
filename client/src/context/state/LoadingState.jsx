@@ -1,4 +1,5 @@
 import { createContext, useState } from "react";
+import {sleep} from "@/tools/functions.js";
 
 
 export const LoadingContext = createContext();
@@ -13,7 +14,10 @@ export const LoadingState = ({ children }) => {
   const loading = {
     start: () => setLoading(true),
 
-    stop: () => setLoading(false),
+    stop: async (delay = 1000) => {
+      await sleep(delay);
+      setLoading(false);
+    },
   };
 
 

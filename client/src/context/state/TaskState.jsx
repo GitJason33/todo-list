@@ -11,6 +11,7 @@ import {
 import TaskService from '@/services/task-service';
 import { useAlert, useAuth, useLoading } from '../contextHooks';
 import { useNavigate } from 'react-router-dom';
+import {getFromCache, saveToCache, updateInCache} from "@/tools/caching.js";
 
 
 
@@ -30,7 +31,9 @@ export const TaskState = ({ children }) => {
   };
   const [state, dispatch] = useReducer(TaskReducer, initialState);
 
-  const { isLoggedIn, user } = useAuth();
+  const authCtx = useAuth();
+  const [isLoggedIn, user] = [authCtx?.isLoggedIn, authCtx?.user];
+
   const { Alert } = useAlert();
   const { loading } = useLoading();
   const redirect = useNavigate();
@@ -51,42 +54,65 @@ export const TaskState = ({ children }) => {
       return;
     }
     if(window.location.pathname === "/dashboard") loading.start();
+
     const [todos, err] = await TaskService.getAll();
-    loading.stop();
-
-
     if(err) console.error("🚀 ~ file: TaskState.jsx:57 ~ getAllTodos ~ err:", err)
     else dispatch({ type: GET_TODOS, payload: todos });
+
+    loading.stop();
   }
 
 
   const getExampleTodos = async () => {
-    const [todos, err] = await TaskService.getExamples();
+    let todos = await getFromCache('exampleTodos');
 
+    if(!todos){
+      const [todos, err] = await TaskService.getExamples();
 
-    if(err) console.error("🚀 ~ file: TaskState.jsx:68 ~ getExampleTodos ~ err:", err);
-    else dispatch({ type: GET_EXAMPLE_TODOS, payload: todos });
-  } 
+      if(err) console.error("🚀 ~ file: TaskState.jsx:68 ~ getExampleTodos ~ err:", err);
+      else {
+        await saveToCache('exampleTodos', todos);
+        dispatch({ type: GET_EXAMPLE_TODOS, payload: todos });
+      }
+    }
+    else{
+      dispatch({ type: GET_EXAMPLE_TODOS, payload: todos });
+    }
+  }
     
   
   
   /** checks if the todo is already in the app before requesting it from the server */
   const getOneTodo = async (id) => {
-    const [potentiallyHere] = state.todos.filter(todo => todo._id === id);
+    // case if target is the currentTodo already
+    if(state.currentTodo !== null && state.currentTodo._id == id)
+      return;
 
+    // case if it's an example
+    if(id <= 6){
+      const [example] = state.exampleTodos.filter((todo) => todo._id == id);
+
+      if(example) {
+        dispatch({ type: GET_TODO, payload: example });
+        return;
+      }
+    }
+
+    // case if it's already in the todos array
+    const [potentiallyHere] = state.todos.filter(todo => todo._id == id);
 
     if(potentiallyHere){
       dispatch({ type: GET_TODO, payload: potentiallyHere })
+      return;
     }
-    else {
-      if(window.location.pathname.startsWith("/todo/")) loading.start();
-      const [todo, err] = await TaskService.getOne(id);
-      loading.stop();
 
+    // default case to fetch from server
+    loading.start();
+    const [todo, err] = await TaskService.getOne(id);
+    loading.stop(500);
 
-      if(err) console.error("🚀 ~ file: TaskState.jsx:83 ~ getOneTodo ~ err:", err)
-      else dispatch({ type: GET_TODO, payload: todo });
-    }
+    if(err) console.error("🚀 ~ file: TaskState.jsx:83 ~ getOneTodo ~ err:", err)
+    else dispatch({ type: GET_TODO, payload: todo });
   }
   
   
@@ -94,7 +120,7 @@ export const TaskState = ({ children }) => {
   const createTodo = async (data) => {
     loading.start();
     const [todo, err] = await TaskService.create(data);
-    loading.stop();
+    loading.stop(500);
 
     if(err) Alert.open(`Operation failed - ${err}`);
     else {
@@ -108,7 +134,7 @@ export const TaskState = ({ children }) => {
   const editTodo = async (id, data) => {
     loading.start();
     const [, err] = await TaskService.edit(id, data);
-    loading.stop();
+    loading.stop(500);
     
 
     if(err) Alert.open(`Operation failed - ${err}`);

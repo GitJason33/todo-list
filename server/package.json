@@ -6,6 +6,7 @@
   "type": "commonjs",
   "scripts": {
     "dev": "nodemon ./dist/server.bundle.js",
+    "normal-dev": "nodemon ./server.js",
     "bundle": "webpack --watch",
     "preview": "node ./dist/server.bundle.js",
     "build": "webpack"
@@ -21,6 +22,7 @@
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
     "pg": "^8.11.3"
   }
 }
